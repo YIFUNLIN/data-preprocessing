@@ -1,0 +1,6 @@
+import csv 
+fn = 'cashflow_train.csv'    #檔案名稱
+with open(fn) as csvfile:  
+    csvReader = csv.DictReader(csvfile)  #將資料轉成排序字典的類型讀取
+    for row in csvReader:
+        print(row['CUST_RK'],row['EVENT_TYPE1'])   #可印出指定的欄位
