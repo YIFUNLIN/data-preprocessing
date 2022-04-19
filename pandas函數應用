@@ -1,0 +1,60 @@
+import csv 
+import pandas as pd
+fn = 'cashflow_train.csv'    #檔案名稱
+c = []
+d = []
+
+with open(fn) as csvfile:  
+    csvReader = csv.DictReader(csvfile)  #將資料轉成排序字典的類型讀取
+    for row in csvReader:
+        c.append(row['CUST_RK'])
+        d.append(row['EVENT_TYPE1'])
+       
+grades = { "customer":c,
+             "type":d
+}
+
+df = pd.DataFrame(grades)
+df.columns = ['客戶代碼','客戶事件']
+print(df)
+
+
+
+print(df['客戶代碼'])    #取得單一欄位資料(型別為series)
+print(df[['客戶代碼']])  #取得單一欄位資料(型別為DataFrame)
+print(df[['客戶代碼','客戶事件']]) #取得多欄位資料(印出指定欄位的所有數據)
+print(df[0:10])   #印出0~10筆資料
+print(df.at[1,'客戶代碼'])  #利用at[資料索引值,欄位名稱]取得索引值為1且欄位名稱為"客戶代碼"的資料
+print(df.iat[2,1]) #iat[索引值,欄位順序]，利用索引值可取出單一的數值
+print(df.loc[[1,4],['客戶代碼','客戶事件']]) #印出索引值為1和4且欄位為客戶代碼和事件
+print(df.iloc[[2,7],[0,1]]) #印出index為2和7且欄位位值在0和1的資料
+#df.insert(2,column="喜好",value = [5,3,4,1])   #可新增欄位，但這邊我數據太多(error)，無法一一新增
+
+#  新增data~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+df_want = pd.DataFrame({           #先新增一個dataframe
+    '客戶代碼':None,
+    '客戶事件':['吃大便']
+}) 
+
+new_df = pd.concat([df,df_want],ignore_index=True)  #利用panda的contact()將兩個data set進行合併
+print(new_df)
+
+# 資料修改~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+df.at[1,'客戶代碼'] = 777777    
+df.iat[2,1] = '吃屎'
+print(df)
+
+drop_df = df.drop(['客戶事件'],axis = 1)   #將指定欄位名稱的資料全部刪除，
+                                          #axis = 1 代表刪除整個欄位
+drop_part = df.drop([0,2],axis = 0)  #刪除第一筆和第三筆資料，
+                                           #axis=0代表刪除部分指定的資料
+#~~~dropna()將含有空值orNan的資料列刪除~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``
+neww_df = new_df.dropna()    
+print(new_df)
+print(neww_df)
+
+#~~~將重複出現的資料刪除 drop_duplicates()~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+dd = df.drop_duplicates()
+
+
+
