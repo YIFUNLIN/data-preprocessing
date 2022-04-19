@@ -1,0 +1,9 @@
+import pandas as pd
+from glob2 import glob
+files = glob('C:\A1\CUST*.csv')
+
+print(files)
+df = pd.concat(
+    (pd.read_csv(file,encoding='big5',usecols=['CUST_RK','EVENT','EVENT_TYPE1','EVENT_DT',],
+    dtype={'CUST_RK':int,'EVENT':str,'EVENT_TYPE1':str,'EVENT_DT':str})for file in files),ignore_index=True)
+
