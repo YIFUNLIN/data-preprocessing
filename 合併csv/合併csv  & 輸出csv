@@ -9,9 +9,5 @@ df = pd.concat(
 
 
 
-
-
-
-
 #將整理過的資料用csv格式輸出
 df.to_csv('data_compilation.csv',index=False,encoding='big5')  #將excel資料整理完合併輸出，方便查看完整的data
