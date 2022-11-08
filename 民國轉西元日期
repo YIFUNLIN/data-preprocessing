@@ -1,0 +1,3 @@
+for i in range(len(time_start)):
+    time_start[i] = time_start[i].replace(time_start[i][0:3],str(int(time_start[i][0:3]) + 1911))
+time_start = pd.to_datetime(time_start,format = '%Y/%m/%d')
